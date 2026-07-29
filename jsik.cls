@@ -72,7 +72,7 @@
 {\hspace*{12pt}\@eabstract}
 \par
 \vspace{0.25cm}
-       {$B%-!<%o!<%I(B: \@keywords}
+       {キーワード: \@keywords}
 \bigskip
 \bigskip
     \setcounter{section}{0}%
