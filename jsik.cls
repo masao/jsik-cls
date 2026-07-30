@@ -47,7 +47,8 @@
 \def\affiliation#1{\gdef\@affiliation{#1}}
 \long\def\jabstract#1{\gdef\@jabstract{#1}}
 \long\def\eabstract#1{\gdef\@eabstract{#1}}
-\def\keywords#1{\gdef\@keywords{#1}}
+\def\jkeywords#1{\gdef\@jkeywords{#1}}
+\def\ekeywords#1{\gdef\@ekeywords{#1}}
 \def\maketitle{
   \twocolumn[
     \begin{flushleft}
@@ -72,7 +73,8 @@
 {\hspace*{12pt}\@eabstract}
 \par
 \vspace{0.25cm}
-       {キーワード: \@keywords}
+{\small キーワード: \@jkeywords}\\
+{\small Keywords: \@ekeywords}
 \bigskip
 \bigskip
     \setcounter{section}{0}%
