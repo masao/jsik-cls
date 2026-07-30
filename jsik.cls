@@ -63,7 +63,7 @@
       {\large \@jauthor } \\
       {\large \@eauthor } \\
     \end{center}
-      {\normalsize \@affiliation }%
+      {\small \@affiliation }%
 \bigskip
 \par
 {\hspace*{12pt}\@jabstract}
