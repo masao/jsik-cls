@@ -1,6 +1,6 @@
 \documentclass{jsik}
 
-\begin{document}
+\usepackage{url}
 
 \pagestyle{empty}
 \thispagestyle{empty}
@@ -11,7 +11,7 @@
 \jauthor{堀 幸雄$^{1*}$, 高久 雅生$^{2}$, 江草 由佳$^{3}$}
 \eauthor{Yukio HORI$^{1*}$, Masao TAKAKU$^{2}$, Yuka EGUSA$^{3}$}
 \affiliation{
-  \begin{tabbing}
+\begin{tabbing}
 1 \= 香川大学総合情報センター \\
 \> Information Technology Center, Kagawa University \\
 \> 〒760-0016 香川県高松市幸町 2-1 \\
@@ -28,7 +28,7 @@
 \> https://orcid.org/0000-0XXX-XXXX-XXXX \\
 \> E-mail: author3@example.jp \\
 $*$ 連絡先著者
-  \end{tabbing}
+\end{tabbing}
 }
 
 \jabstract{
@@ -36,7 +36,6 @@ $*$ 連絡先著者
 JSIK の投稿様式に準じたクラスファイルを新たに作成した．
 本文書によりその書式を示す．
 }
-
 \eabstract{
 This paper presents the method to write thesises to the JSIK paper
 with \LaTeX. We made a \LaTeX class file keeping posting rules.
@@ -45,6 +44,7 @@ with \LaTeX. We made a \LaTeX class file keeping posting rules.
 \jkeywords{テンプレート, LaTeX, 電子化}
 \ekeywords{Template, \LaTeX, Electronic Publishing}
 
+\begin{document}
 \maketitle
 \section{はじめに}
 jsik.cls は情報知識学会誌\cite{ex1}\cite{ex2}のための \LaTeX クラスファイルです．
@@ -60,10 +60,6 @@ jsik.cls は情報知識学会誌\cite{ex1}\cite{ex2}のための \LaTeX クラ�
 
 \bibliographystyle{jsik}
 \bibliography{takaku}
-
-%\begin{thebibliography}{0}
-%\bibitem{aaa} あいうえお
-%\end{thebibliography}
 
 %\begin{thebibliography}{1}
 %\bibitem{ex1}

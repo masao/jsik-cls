@@ -75,8 +75,6 @@
   \RequirePackage[dvips]{graphicx}
 \fi
 
-\RequirePackage{url}
-
 \ifjsik@balance
   \RequirePackage{balance}
   \AtBeginDocument{\balance}
