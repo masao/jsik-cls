@@ -4,23 +4,87 @@
 %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \NeedsTeXFormat{pLaTeX2e}
-\ProvidesClass{jsik}[2009/3/10 ver 0.1]
+\ProvidesClass{jsik}[2026/07/30 ver 2.0 JSIK article class]
 
-% packages include
-\input{jarticle.sty}
-\usepackage[dvips]{graphicx}
-\usepackage{ascmac}
-\usepackage{balance}
-\usepackage{url}
+% -------------------------------------------------------------------
+% Engine detection
+% -------------------------------------------------------------------
+\newif\ifjsik@uplatex
+\ifx\uptexversion\undefined
+  \jsik@uplatexfalse
+\else
+  \jsik@uplatextrue
+\fi
 
-%\newcounter{@paper}
-%\setcounter{@paper}{1}
-%\setlength\paperheight {297mm}%
-%\setlength\paperwidth  {210mm}
-%\input{jsize12.clo}
+% -------------------------------------------------------------------
+% Class options
+% -------------------------------------------------------------------
+% The base font size is fixed at 11pt.
+\DeclareOption{10pt}{%
+  \ClassWarning{jsik}{10pt is not supported; using 11pt}%
+}
+\DeclareOption{12pt}{%
+  \ClassWarning{jsik}{12pt is not supported; using 11pt}%
+}
 
+% Graphics driver
+\newif\ifjsik@dvipdfmx
+\jsik@dvipdfmxtrue
+\DeclareOption{dvipdfmx}{%
+  \jsik@dvipdfmxtrue
+}
+\DeclareOption{dvips}{%
+  \jsik@dvipdfmxfalse
+}
 
-% page layout
+% Column balancing
+\newif\ifjsik@balance
+\jsik@balancetrue
+\DeclareOption{balance}{\jsik@balancetrue}
+\DeclareOption{nobalance}{\jsik@balancefalse}
+
+% Pass all other options to the appropriate base class.
+\DeclareOption*{%
+  \ifjsik@uplatex
+    \PassOptionsToClass{\CurrentOption}{ujarticle}%
+  \else
+    \PassOptionsToClass{\CurrentOption}{jarticle}%
+  \fi
+}
+\ProcessOptions\relax
+
+% -------------------------------------------------------------------
+% Base class
+% -------------------------------------------------------------------
+
+\ifjsik@uplatex
+  \ClassInfo{jsik}{upLaTeX detected; loading ujarticle}%
+  \LoadClass[11pt]{ujarticle}
+\else
+  \ClassInfo{jsik}{pLaTeX detected; loading jarticle}%
+  \LoadClass[11pt]{jarticle}
+\fi
+
+% -------------------------------------------------------------------
+% Packages
+% -------------------------------------------------------------------
+
+\ifjsik@dvipdfmx
+  \RequirePackage[dvipdfmx]{graphicx}
+\else
+  \RequirePackage[dvips]{graphicx}
+\fi
+
+\RequirePackage{url}
+
+\ifjsik@balance
+  \RequirePackage{balance}
+  \AtBeginDocument{\balance}
+\fi
+
+% -------------------------------------------------------------------
+% Page layout
+% -------------------------------------------------------------------
 \setlength{\headheight}{0pt}
 \setlength{\headsep}{0pt}
 \setlength{\topskip}{0pt}
@@ -38,7 +102,9 @@
 \setlength{\textwidth}{160truemm}
 \setlength{\columnsep}{2em}
 
+% -------------------------------------------------------------------
 % maketitle
+% -------------------------------------------------------------------
 \def\articletype#1{\gdef\@articletype{#1}}
 \def\jtitle#1{\gdef\@jtitle{#1}}
 \def\etitle#1{\gdef\@etitle{#1}}
@@ -73,8 +139,12 @@
 {\hspace*{12pt}\@eabstract}
 \par
 \vspace{0.25cm}
-{\small キーワード: \@jkeywords}\\
-{\small Keywords: \@ekeywords}
+{\small
+\noindent
+ キーワード: \@jkeywords\par
+\noindent
+ Keywords: \@ekeywords
+}%
 \bigskip
 \bigskip
     \setcounter{section}{0}%
@@ -86,10 +156,8 @@
 %  usage: \cite{bibkey}
 \def\@cite#1#2{$^{\mbox{\scriptsize{[#1\if@tempswa , #2\fi}]}}$}%
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%
 %% End of file `jsik.cls'.
 %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
- 
