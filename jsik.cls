@@ -6,14 +6,20 @@
 \NeedsTeXFormat{pLaTeX2e}
 \ProvidesClass{jsik}[2026/07/30 ver 2.0 JSIK article class]
 
+% Supported environments: pLaTeX / upLaTeX
+%   TeX Live 2012 or later
+
 % -------------------------------------------------------------------
-% Engine detection
+% Engine / format detection
 % -------------------------------------------------------------------
+% pLaTeX と upLaTeX を自動判定: japanese-otfなどの方式と同様のものを採用
+% （最近のTeX Liveが採用する e-upTeX 上の pTeX互換（レガシー）モードでの実行も検出可能）
+% なお、TeX Live 2022以前でも動作するよう iftex/ifptex パッケージは採用していない。
 \newif\ifjsik@uplatex
-\ifx\uptexversion\undefined
-  \jsik@uplatexfalse
-\else
+\ifnum\ifx\ucs\@undefined\z@\else\ucs"3000 \fi="3000
   \jsik@uplatextrue
+\else
+  \jsik@uplatexfalse
 \fi
 
 % -------------------------------------------------------------------
