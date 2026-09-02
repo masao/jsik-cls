@@ -1,0 +1,86 @@
+name: LaTeX compatibility
+
+on:
+  push:
+    paths:
+      - "**/*.cls"
+      - "**/*.sty"
+      - "**/*.tex"
+      - ".github/workflows/latex.yml"
+  pull_request:
+    paths:
+      - "**/*.cls"
+      - "**/*.sty"
+      - "**/*.tex"
+      - ".github/workflows/latex.yml"
+  workflow_dispatch:
+
+jobs:
+  compatibility:
+    name: "TeX Live ${{ matrix.texlive }} / ${{ matrix.engine }}"
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        texlive:
+          - "2018"
+          - "2019"
+          - "2020"
+          - "2021"
+          - "2022"
+          - "2023"
+          - "2024"
+          - "2025"
+          - "2026"
+        engine:
+          - platex
+          - uplatex
+
+    container:
+      image: maxkratz/texlive:${{ matrix.texlive }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check TeX environment
+        run: |
+          echo "TeX Live: ${{ matrix.texlive }}"
+          echo "Engine: ${{ matrix.engine }}"
+
+          which platex
+          which uplatex
+
+          platex --version
+          uplatex --version
+
+          kpsewhich jarticle.cls
+          kpsewhich ujarticle.cls
+          kpsewhich graphicx.sty
+          kpsewhich balance.sty || true
+
+      - name: Compile sample
+        run: |
+          ${{ matrix.engine }} \
+            -interaction=nonstopmode \
+            -halt-on-error \
+            -file-line-error \
+            sample.tex
+
+      - name: Check base-class detection
+        run: |
+          if [ "${{ matrix.engine }}" = "platex" ]; then
+            grep -q "pLaTeX detected; loading jarticle" sample.log
+          else
+            grep -q "upLaTeX detected; loading ujarticle" sample.log
+          fi
+
+      - name: Generate PDF
+        run: |
+          dvipdfmx sample.dvi
+
+      - name: Verify PDF
+        run: |
+          test -s sample.pdf
+          ls -lh sample.pdf
