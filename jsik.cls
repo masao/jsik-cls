@@ -81,10 +81,12 @@
   \RequirePackage[dvips]{graphicx}
 \fi
 
-\ifjsik@balance
+\IfFileExists{balance.sty}{%
   \RequirePackage{balance}
   \AtBeginDocument{\balance}
-\fi
+}{%
+  \ClassWarning{jsik}{balance.sty not found; column balancing disabled}
+}
 
 % -------------------------------------------------------------------
 % Page layout
