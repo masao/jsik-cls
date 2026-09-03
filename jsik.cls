@@ -82,8 +82,12 @@
 \fi
 
 \ifjsik@balance
-  \RequirePackage{balance}
-  \AtBeginDocument{\balance}
+  \IfFileExists{balance.sty}{%
+    \RequirePackage{balance}
+    \AtBeginDocument{\balance}
+  }{%
+    \ClassWarning{jsik}{balance.sty not found; column balancing disabled}
+  }
 \fi
 
 % -------------------------------------------------------------------
