@@ -127,16 +127,16 @@
   \twocolumn[
     \begin{flushleft}
       \vspace{-0.75cm}
-      {\bf \@articletype}
+      {\bfseries \@articletype}
     \end{flushleft}%
     \begin{center}
 %      \vspace{0.25cm}
-      {\Large \bf \@jtitle } \\
+      {\Large \bfseries \@jtitle } \\
 %      \vspace{0.25cm}
-      {\Large \bf \@etitle } \\
+      {\Large \bfseries \@etitle } \\
       \smallskip
-      {\large \@jauthor } \\
-      {\large \@eauthor } \\
+      {\large\bfseries \@jauthor } \\
+      {\large\bfseries \@eauthor } \\
     \end{center}
       {\small \@affiliation }%
 \bigskip
