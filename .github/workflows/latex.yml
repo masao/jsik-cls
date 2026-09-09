@@ -6,12 +6,16 @@ on:
       - "**/*.cls"
       - "**/*.sty"
       - "**/*.tex"
+      - '**/*.bst'
+      - '**/*.bib'
       - ".github/workflows/latex.yml"
   pull_request:
     paths:
       - "**/*.cls"
       - "**/*.sty"
       - "**/*.tex"
+      - '**/*.bst'
+      - '**/*.bib'
       - ".github/workflows/latex.yml"
   workflow_dispatch:
 
@@ -33,9 +37,11 @@ jobs:
           - "2024"
           - "2025"
           - "2026"
-        engine:
-          - platex
-          - uplatex
+        include:
+          - engine: platex
+            bibtex: pbibtex
+          - engine: uplatex
+            bibtex: upbibtex
 
     container:
       image: maxkratz/texlive:${{ matrix.texlive }}
@@ -48,6 +54,7 @@ jobs:
         run: |
           echo "TeX Live: ${{ matrix.texlive }}"
           echo "Engine: ${{ matrix.engine }}"
+          echo "BibTeX: ${{ matrix.bibtex }}"
 
           which platex
           which uplatex
@@ -70,7 +77,8 @@ jobs:
 
       - name: Run BibTeX
         run: |
-          pbibtex sample || true
+          ${{ matrix.bibtex }} sample
+          test -s sample.bbl
           ${{ matrix.engine }} \
             -interaction=nonstopmode \
             -halt-on-error \
@@ -81,6 +89,12 @@ jobs:
             -halt-on-error \
             -file-line-error \
             sample.tex
+          if grep -Eq \
+            "Citation .* undefined|There were undefined references" \
+            sample.log; then
+            echo "Undefined citations or references detected"
+            exit 1
+          fi
 
       - name: Check base-class detection
         run: |
