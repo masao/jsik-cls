@@ -2,16 +2,22 @@ name: LaTeX compatibility
 
 on:
   push:
+    branches:
+      - main
     paths:
       - "**/*.cls"
       - "**/*.sty"
       - "**/*.tex"
+      - '**/*.bst'
+      - '**/*.bib'
       - ".github/workflows/latex.yml"
   pull_request:
     paths:
       - "**/*.cls"
       - "**/*.sty"
       - "**/*.tex"
+      - '**/*.bst'
+      - '**/*.bib'
       - ".github/workflows/latex.yml"
   workflow_dispatch:
 
@@ -36,6 +42,11 @@ jobs:
         engine:
           - platex
           - uplatex
+        include:
+          - engine: platex
+            bibtex: pbibtex
+          - engine: uplatex
+            bibtex: upbibtex
 
     container:
       image: maxkratz/texlive:${{ matrix.texlive }}
@@ -48,6 +59,7 @@ jobs:
         run: |
           echo "TeX Live: ${{ matrix.texlive }}"
           echo "Engine: ${{ matrix.engine }}"
+          echo "BibTeX: ${{ matrix.bibtex }}"
 
           which platex
           which uplatex
@@ -67,6 +79,27 @@ jobs:
             -halt-on-error \
             -file-line-error \
             sample.tex
+
+      - name: Run BibTeX
+        run: |
+          ${{ matrix.bibtex }} sample
+          test -s sample.bbl
+          ${{ matrix.engine }} \
+            -interaction=nonstopmode \
+            -halt-on-error \
+            -file-line-error \
+            sample.tex
+          ${{ matrix.engine }} \
+            -interaction=nonstopmode \
+            -halt-on-error \
+            -file-line-error \
+            sample.tex
+          if grep -Eq \
+            "Citation .* undefined|There were undefined references" \
+            sample.log; then
+            echo "Undefined citations or references detected"
+            exit 1
+          fi
 
       - name: Check base-class detection
         run: |
