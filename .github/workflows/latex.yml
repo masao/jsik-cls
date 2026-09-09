@@ -68,6 +68,20 @@ jobs:
             -file-line-error \
             sample.tex
 
+      - name: Run BibTeX
+        run: |
+          pbibtex sample || true
+          ${{ matrix.engine }} \
+            -interaction=nonstopmode \
+            -halt-on-error \
+            -file-line-error \
+            sample.tex
+          ${{ matrix.engine }} \
+            -interaction=nonstopmode \
+            -halt-on-error \
+            -file-line-error \
+            sample.tex
+
       - name: Check base-class detection
         run: |
           if [ "${{ matrix.engine }}" = "platex" ]; then
