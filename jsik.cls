@@ -126,17 +126,19 @@
 \def\maketitle{
   \twocolumn[
     \begin{flushleft}
-      \vspace{-0.75cm}
+%      \vspace{-0.75cm}
       {\bfseries \@articletype}
     \end{flushleft}%
     \begin{center}
-%      \vspace{0.25cm}
-      {\Large \bfseries \@jtitle } \\
-%      \vspace{0.25cm}
-      {\Large \bfseries \@etitle } \\
       \smallskip
-      {\large\bfseries \@jauthor } \\
-      {\large\bfseries \@eauthor } \\
+      {\Large\bfseries \@jtitle\par}
+      \vspace{0.3em}
+      {\Large\bfseries \@etitle\par}
+
+      \bigskip
+
+      {\large\bfseries \@jauthor\par}
+      {\large\bfseries \@eauthor\par}
     \end{center}
       {\small \@affiliation }%
 \bigskip
@@ -146,7 +148,7 @@
 \medskip
 {\hspace*{12pt}\@eabstract}
 \par
-\vspace{0.25cm}
+\bigskip
 {\small
 \noindent
  キーワード: \@jkeywords\par
