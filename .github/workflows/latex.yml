@@ -2,6 +2,8 @@ name: LaTeX compatibility
 
 on:
   push:
+    branches:
+      - main
     paths:
       - "**/*.cls"
       - "**/*.sty"
