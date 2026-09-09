@@ -57,12 +57,41 @@ jsik.cls は情報知識学会誌\cite{ex1}\cite{ex2}のための \LaTeX クラ�
 また本クラスファイルには高久の作成した情報知識学会誌 BibTeX用
 文献引用スタイルファイル jsik.bst~\cite{jsik-bst} が同封されています．
 
+\section{図表の挿入例}
+
+論文中に図表類を入れる必要があるときは，\LaTeX の figure 環境や table 環境を用いて挿入してください．
+
+図\ref{fig:example} は図の例です．
+また，表\ref{tab:results} は表の例です．
+
+\begin{figure}[tb]
+  \centering
+  \includegraphics[width=\linewidth]{figures/sample-figure}
+  \caption{図の例}
+  \label{fig:example}
+\end{figure}
+
+\begin{table}[tb]
+  \centering
+  \caption{評価結果の例}
+  \label{tab:results}
+  \begin{tabular}{lrr}
+    \hline
+    手法 & Precision & Recall \\
+    \hline
+    Baseline & 0.72 & 0.68 \\
+    Method A & 0.81 & 0.76 \\
+    Method B & 0.85 & 0.79 \\
+    \hline
+  \end{tabular}
+\end{table}
+
 \section{データ利用可能性宣言}
 
 本スタイルファイルはGitHubの \url{https://github.com/masao/jsik-cls} で公開しており，誰でも自由に利用できます．
 
 \bibliographystyle{jsik}
-\bibliography{takaku}
+\bibliography{references}
 
 %\begin{thebibliography}{1}
 %\bibitem{ex1}
