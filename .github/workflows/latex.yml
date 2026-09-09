@@ -39,6 +39,9 @@ jobs:
           - "2024"
           - "2025"
           - "2026"
+        engine:
+          - platex
+          - uplatex
         include:
           - engine: platex
             bibtex: pbibtex
